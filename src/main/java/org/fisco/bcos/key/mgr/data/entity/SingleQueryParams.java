@@ -19,35 +19,24 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
- * Entity class of table tb_data_info.
+ * Entity class of query single data params.
  */
 @Data
-public class TbDataInfo {
+public class SingleQueryParams {
 
     private String account;
     private String dataID;
     private String dataSubID;
-    private Integer dataStatus;
-    private String plainText;
-    private String cipherText1;
-    private String cipherText2;
-    private LocalDateTime createTime;
-    private String description;
 
 
-    public TbDataInfo() {
+    public SingleQueryParams() {
         super();
     }
 
-    public TbDataInfo(String account, String dataID, String dataSubID, String plainText,
-                      String cipherText1, String cipherText2, String description) {
+    public SingleQueryParams(String account, String dataID, String dataSubID) {
         super();
         this.account = account;
         this.dataID = dataID;
         this.dataSubID = dataSubID;
-        this.plainText = plainText;
-        this.cipherText1 = cipherText1;
-        this.cipherText2 = cipherText2;
-        this.description = description;
     }
 }

@@ -30,13 +30,15 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class DataListParam extends BaseQueryParam {
 
+    private String account;
     private String dataID;
     private String dataSubID;
     private Integer dataStatus;
 
-    public DataListParam(Integer start, Integer pageSize, String dataID, String dataSubID, Integer dataStatus,
+    public DataListParam(Integer start, Integer pageSize, String dataID, String account, String dataSubID, Integer dataStatus,
                          String flagSortedByTime) {
         super(start, pageSize, flagSortedByTime);
+        this.account = account;
         this.dataID = dataID;
         this.dataSubID = dataSubID;
         this.dataStatus = dataStatus;

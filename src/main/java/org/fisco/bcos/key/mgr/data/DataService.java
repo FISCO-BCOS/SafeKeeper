@@ -19,6 +19,7 @@ import org.fisco.bcos.key.mgr.base.code.ConstantCode;
 import org.fisco.bcos.key.mgr.base.exception.KeyMgrException;
 import org.fisco.bcos.key.mgr.base.tools.JacksonUtils;
 import org.fisco.bcos.key.mgr.data.entity.DataListParam;
+import org.fisco.bcos.key.mgr.data.entity.SingleQueryParams;
 import org.fisco.bcos.key.mgr.data.entity.TbDataInfo;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +45,8 @@ public class DataService {
         log.debug("start addDataRow. data info:{}", JacksonUtils.objToString(dataInfo));
 
         // check data
-        dataNotExist(dataInfo.getDataID(), dataInfo.getDataSubID());
+        SingleQueryParams queryParams = new SingleQueryParams(dataInfo.getAccount(), dataInfo.getDataID(), dataInfo.getDataSubID());
+        dataNotExist(queryParams);
 
         // add data row
         Integer affectRow = dataMapper.addDataRow(dataInfo);
@@ -58,9 +60,9 @@ public class DataService {
     /**
      * query the data.
      */
-    public TbDataInfo queryData(String dataID, String dataSubID) {
-        log.debug("start queryData. dataID:{}, dataSubID:{} ", dataID, dataSubID);
-        TbDataInfo dataRow = dataMapper.queryData(dataID, dataSubID);
+    public TbDataInfo queryData(SingleQueryParams queryParams) {
+        log.debug("start queryData. query info:{}", JacksonUtils.objToString(queryParams));
+        TbDataInfo dataRow = dataMapper.queryData(queryParams);
         log.debug("end queryData. accountRow:{} ", JacksonUtils.objToString(dataRow));
         return dataRow;
     }
@@ -89,14 +91,14 @@ public class DataService {
     /**
      * delete data info.
      */
-    public void deleteDataRow(String dataID, String dataSubID) throws KeyMgrException {
-        log.debug("start deleteDataRow. dataID:{}, dataSubID:{} ", dataID, dataSubID);
+    public void deleteDataRow(SingleQueryParams queryParams) throws KeyMgrException {
+        log.debug("start deleteDataRow. delete info:{}", JacksonUtils.objToString(queryParams));
 
         // check data
-        dataExist(dataID, dataSubID);
+        dataExist(queryParams);
 
         // delete data row
-        Integer affectRow = dataMapper.deleteDataRow(dataID, dataSubID);
+        Integer affectRow = dataMapper.deleteDataRow(queryParams);
 
         // check result
         checkDbAffectRow(affectRow);
@@ -107,9 +109,9 @@ public class DataService {
     /**
      * query existence of data.
      */
-    public int existOfData(String dataID, String dataSubID) {
-        log.debug("start existOfData. dataID:{} dataSubID:{} ", dataID, dataSubID);
-        Integer dataCount = dataMapper.existOfData(dataID, dataSubID);
+    public int existOfData(SingleQueryParams queryParams) {
+        log.debug("start existOfData. info:{}", JacksonUtils.objToString(queryParams));
+        Integer dataCount = dataMapper.existOfData(queryParams);
         int count = dataCount == null ? 0 : dataCount.intValue();
         log.debug("end existOfData. count:{} ", count);
         return count;
@@ -118,14 +120,14 @@ public class DataService {
     /**
      * boolean the key data is exist.
      */
-    public void dataExist(String dataID, String dataSubID) throws KeyMgrException {
-        if (StringUtils.isBlank(dataID)) {
+    public void dataExist(SingleQueryParams queryParams) throws KeyMgrException {
+        if (StringUtils.isBlank(queryParams.getDataID())) {
             throw new KeyMgrException(ConstantCode.ACCOUNT_NAME_EMPTY);
         }
-        if (StringUtils.isBlank(dataSubID)) {
+        if (StringUtils.isBlank(queryParams.getDataSubID())) {
             throw new KeyMgrException(ConstantCode.KEY_ALIASES_EMPTY);
         }
-        int count = existOfData(dataID, dataSubID);
+        int count = existOfData(queryParams);
         if (count == 0) {
             throw new KeyMgrException(ConstantCode.KEY_NOT_EXISTS);
         }
@@ -134,14 +136,14 @@ public class DataService {
     /**
      * boolean the key of data is not exist.
      */
-    public void dataNotExist(String dataID, String dataSubID) throws KeyMgrException {
-        if (StringUtils.isBlank(dataID)) {
+    public void dataNotExist(SingleQueryParams queryParams) throws KeyMgrException {
+        if (StringUtils.isBlank(queryParams.getDataID())) {
             throw new KeyMgrException(ConstantCode.ACCOUNT_NAME_EMPTY);
         }
-        if (StringUtils.isBlank(dataSubID)) {
+        if (StringUtils.isBlank(queryParams.getDataSubID())) {
             throw new KeyMgrException(ConstantCode.KEY_ALIASES_EMPTY);
         }
-        int count = existOfData(dataID, dataSubID);
+        int count = existOfData(queryParams);
         if (count > 0) {
             throw new KeyMgrException(ConstantCode.KEY_EXISTS);
         }

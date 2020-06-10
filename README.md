@@ -48,9 +48,9 @@ FISCO-Key-Manager作为密钥管理服务，提供身份认证基础上的私钥
 
 ```text
 -- ----------------------------
--- Table structure for tb_data_info
+-- Table structure for tb_key_info
 -- ----------------------------
-CREATE TABLE IF NOT EXISTS tb_data_info (
+CREATE TABLE IF NOT EXISTS tb_key_info (
   account varchar(50) binary NOT NULL COMMENT '系统账号',
   key_alias varchar(255) NOT NULL COMMENT '私钥标识',
   cipher_text text NOT NULL COMMENT '经管理员公钥加密的私钥',

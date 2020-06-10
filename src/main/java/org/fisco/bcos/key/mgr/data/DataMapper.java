@@ -16,6 +16,7 @@
 package org.fisco.bcos.key.mgr.data;
 
 import org.fisco.bcos.key.mgr.data.entity.DataListParam;
+import org.fisco.bcos.key.mgr.data.entity.SingleQueryParams;
 import org.fisco.bcos.key.mgr.data.entity.TbDataInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -29,11 +30,11 @@ public interface DataMapper {
 
     Integer addDataRow(TbDataInfo tbAccount);
 
-    TbDataInfo queryData(@Param("dataID") String dataID, @Param("dataSubID") String dataSubID);
+    TbDataInfo queryData(@Param("param") SingleQueryParams queryParams);
 
-    Integer deleteDataRow(@Param("dataID") String dataID, @Param("dataSubID") String dataSubID);
+    Integer deleteDataRow(@Param("param") SingleQueryParams queryParams);
 
-    Integer existOfData(@Param("dataID") String dataID, @Param("dataSubID") String dataSubID);
+    Integer existOfData(@Param("param") SingleQueryParams queryParams);
 
     Integer countOfData(@Param("param") DataListParam param);
 
