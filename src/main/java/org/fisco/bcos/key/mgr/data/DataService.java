@@ -15,9 +15,9 @@
  */
 package org.fisco.bcos.key.mgr.data;
 
-import com.alibaba.fastjson.JSON;
 import org.fisco.bcos.key.mgr.base.code.ConstantCode;
 import org.fisco.bcos.key.mgr.base.exception.KeyMgrException;
+import org.fisco.bcos.key.mgr.base.tools.JacksonUtils;
 import org.fisco.bcos.key.mgr.data.entity.DataListParam;
 import org.fisco.bcos.key.mgr.data.entity.TbDataInfo;
 import lombok.extern.log4j.Log4j2;
@@ -41,7 +41,7 @@ public class DataService {
      * add data row.
      */
     public void addDataRow(TbDataInfo dataInfo) throws KeyMgrException {
-        log.debug("start addDataRow. data info:{}", JSON.toJSONString(dataInfo));
+        log.debug("start addDataRow. data info:{}", JacksonUtils.objToString(dataInfo));
 
         // check data
         dataNotExist(dataInfo.getDataID(), dataInfo.getDataSubID());
@@ -61,7 +61,7 @@ public class DataService {
     public TbDataInfo queryData(String dataID, String dataSubID) {
         log.debug("start queryData. dataID:{}, dataSubID:{} ", dataID, dataSubID);
         TbDataInfo dataRow = dataMapper.queryData(dataID, dataSubID);
-        log.debug("end queryData. accountRow:{} ", JSON.toJSONString(dataRow));
+        log.debug("end queryData. accountRow:{} ", JacksonUtils.objToString(dataRow));
         return dataRow;
     }
 
@@ -69,7 +69,7 @@ public class DataService {
      * query count of data.
      */
     public int countOfData(DataListParam param) {
-        log.debug("start countOfData. account:{} ", JSON.toJSONString(param));
+        log.debug("start countOfData. account:{} ", JacksonUtils.objToString(param));
         Integer keyCount = dataMapper.countOfData(param);
         int count = keyCount == null ? 0 : keyCount.intValue();
         log.debug("end countOfData. count:{} ", count);
@@ -80,9 +80,9 @@ public class DataService {
      * query key list by account.
      */
     public List<TbDataInfo> listOfData(DataListParam param) {
-        log.debug("start listOfData. param:{} ", JSON.toJSONString(param));
+        log.debug("start listOfData. param:{} ", JacksonUtils.objToString(param));
         List<TbDataInfo> list = dataMapper.listOfData(param);
-        log.debug("end listOfData. list:{} ", JSON.toJSONString(list));
+        log.debug("end listOfData. list:{} ", JacksonUtils.objToString(list));
         return list;
     }
 

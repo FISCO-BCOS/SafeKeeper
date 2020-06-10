@@ -15,7 +15,6 @@
  */
 package org.fisco.bcos.key.mgr.role;
 
-import com.alibaba.fastjson.JSON;
 import org.fisco.bcos.key.mgr.base.code.ConstantCode;
 import org.fisco.bcos.key.mgr.base.exception.KeyMgrException;
 import java.util.List;
