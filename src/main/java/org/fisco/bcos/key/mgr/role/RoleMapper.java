@@ -24,8 +24,4 @@ import org.apache.ibatis.annotations.Param;
 public interface RoleMapper {
 
     TbRole queryRoleById(@Param("roleId") Integer roleId);
-
-    Integer countOfRole(@Param("param") RoleListParam param);
-
-    List<TbRole> listOfRole(@Param("param") RoleListParam param);
 }
