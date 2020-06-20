@@ -17,7 +17,7 @@ DBUSER="defaultAccount"
 #dbPass
 PASSWD="defaultPassword"
 #dbName
-DBNAME="fisco_key_manager"
+DBNAME="fisco_safekeeper"
 
 
 #connect to database then execute init
