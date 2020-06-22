@@ -21,7 +21,7 @@ DBNAME="fisco_safekeeper"
 
 
 #connect to database then execute init
-cat kms-sql.list | mysql --user=$DBUSER --password=$PASSWD --host=$IP --database=$DBNAME --port=$PORT --default-character-set=utf8;
+cat safekeeper-sql.list | mysql --user=$DBUSER --password=$PASSWD --host=$IP --database=$DBNAME --port=$PORT --default-character-set=utf8;
 
 if [ "$?" == "0" ]; then
     echo -e "initialize successfully\n"

@@ -38,18 +38,20 @@
 
 #### 1.1.2 参数信息详情
 
-| 序号 | 输入参数      | 类型    | 可为空 | 备注                                                 |
-| ---- | ------------- | ------- | ------ | ---------------------------------------------------- |
-| 1    | account       | String  | 否     | 帐号名称，要求5-20位字母数字下划线组成，且以字符开头 |
-| 2    | accountPwd    | String  | 否     | 登录密码，要求6-20位字母数字下划线组成               |
-| 序号 | 输出参数      | 类型    |        | 备注                                                 |
-| 1    | code          | Int     | 否     | 返回码，0：成功 其它：失败                           |
-| 2    | message       | String  | 否     | 描述                                                 |
-| 3    | data          | object  | 否     | 返回信息实体                                         |
-| 3.1  | accountStatus | Integer | 否     | 帐号状态                                             |
-| 3.2  | account       | String  | 否     | 帐号名称                                             |
-| 3.3  | roleName      | String  | 否     | 角色名称                                             |
-| 3.4  | token         | String  | 否     | 登录标识                                             |
+| 序号 | 请求body   | 类型   | 可为空 | 备注                                                 |
+| ---- | ---------- | ------ | ------ | ---------------------------------------------------- |
+| 1    | account    | String | 否     | 帐号名称，要求5-20位字母数字下划线组成，且以字符开头 |
+| 2    | accountPwd | String | 否     | 登录密码，要求6-20位字母数字下划线组成               |
+
+| 序号 | 返回body      | 类型    | 可为空 | 备注                       |
+| ---- | ------------- | ------- | ------ | -------------------------- |
+| 1    | code          | Int     | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message       | String  | 否     | 描述                       |
+| 3    | data          | object  | 否     | 返回信息实体               |
+| 3.1  | accountStatus | Integer | 否     | 帐号状态                   |
+| 3.2  | account       | String  | 否     | 帐号名称                   |
+| 3.3  | roleName      | String  | 否     | 角色名称                   |
+| 3.4  | token         | String  | 否     | 登录标识                   |
 
 ### 1.1.3 入参示例
 
@@ -93,38 +95,40 @@
 #### 1.2.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址：`/account/addAccount`
+* 请求地址：`/account/add`
 * 请求方式：POST
 * 请求头：Content-type: application/json
 * 返回格式：JSON
 
 #### 1.2.2 参数信息详情
 
-| 序号 | 输入参数      | 类型          | 可为空 | 备注                                                 |
-| ---- | ------------- | ------------- | ------ | ---------------------------------------------------- |
-| 1    | account       | String        | 否     | 帐号名称，要求5-20位字母数字下划线组成，且以字符开头 |
-| 2    | accountPwd    | String        | 否     | 登录密码，要求6-20位字母数字下划线组成               |
-| 3    | roleId        | int           | 否     | 所属角色                                             |
-| 4    | publicKey     | String        | 是     | 用于加密子账号托管的私钥                             |
-| 序号 | 输出参数      | 类型          |        | 备注                                                 |
-| 1    | code          | Int           | 否     | 返回码，0：成功 其它：失败                           |
-| 2    | message       | String        | 否     | 描述                                                 |
-| 3    | data          | object        | 否     | 返回信息实体                                         |
-| 3.1  | account       | String        | 否     | 帐号名称                                             |
-| 3.2  | accountPwd    | String        | 是     | 登录密码                                             |
-| 3.3  | roleId        | Integer       | 否     | 所属角色                                             |
-| 3.4  | roleName      | String        | 否     | 角色名称                                             |
-| 3.5  | accountStatus | Integer       | 否     | 帐号状态                                             |
-| 3.6  | description   | String        | 是     | 备注                                                 |
-| 3.7  | createTime    | LocalDateTime | 否     | 创建时间                                             |
-| 3.8  | modifyTime    | LocalDateTime | 否     | 修改时间                                             |
-| 3.9  | email         | String        | 是     | 用户邮箱                                             |
-| 3.10 | publicKey     | String        | 否     | 用于加密子账号托管的私钥                             |
-| 3.11 | creator       | String        | 否     | 创建者账号                                           |
+| 序号 | 请求body   | 类型   | 可为空 | 备注                                                 |
+| ---- | ---------- | ------ | ------ | ---------------------------------------------------- |
+| 1    | account    | String | 否     | 帐号名称，要求5-20位字母数字下划线组成，且以字符开头 |
+| 2    | accountPwd | String | 否     | 登录密码，要求6-20位字母数字下划线组成               |
+| 3    | roleId     | int    | 否     | 所属角色                                             |
+| 4    | publicKey  | String | 是     | 用于加密子账号托管的核心数据                         |
+
+| 序号 | 返回body      | 类型          | 可为空 | 备注                         |
+| ---- | ------------- | ------------- | ------ | ---------------------------- |
+| 1    | code          | Int           | 否     | 返回码，0：成功 其它：失败   |
+| 2    | message       | String        | 否     | 描述                         |
+| 3    | data          | object        | 否     | 返回信息实体                 |
+| 3.1  | account       | String        | 否     | 帐号名称                     |
+| 3.2  | accountPwd    | String        | 是     | 登录密码                     |
+| 3.3  | roleId        | Integer       | 否     | 所属角色                     |
+| 3.4  | roleName      | String        | 否     | 角色名称                     |
+| 3.5  | accountStatus | Integer       | 否     | 帐号状态                     |
+| 3.6  | description   | String        | 是     | 备注                         |
+| 3.7  | createTime    | LocalDateTime | 否     | 创建时间                     |
+| 3.8  | modifyTime    | LocalDateTime | 否     | 修改时间                     |
+| 3.9  | email         | String        | 是     | 用户邮箱                     |
+| 3.10 | publicKey     | String        | 否     | 用于加密子账号托管的核心数据 |
+| 3.11 | creator       | String        | 否     | 创建者账号                   |
 
 ### 1.2.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/account/addAccount`
+`https://127.0.0.1:9501/SafeKeeper/account/add`
 
 ```
 {
@@ -172,23 +176,25 @@
 #### 1.3.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址：`account/deleteAccount/{account}`
+* 请求地址：`account/delete`
 * 请求方式：DELETE
 * 返回格式：JSON
 
 #### 1.3.2 参数信息详情
 
-| 序号 | 输入参数 | 类型   | 可为空 | 备注                       |
+| 序号 | 请求body | 类型   | 可为空 | 备注     |
+| ---- | -------- | ------ | ------ | -------- |
+| 1    | account  | String | 否     | 帐号名称 |
+
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
 | ---- | -------- | ------ | ------ | -------------------------- |
-| 1    | account  | String | 否     | 帐号名称                   |
-| 序号 | 输出参数 | 类型   |        | 备注                       |
 | 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
 | 2    | message  | String | 否     | 描述                       |
 | 3    | data     | object | 是     | 返回信息实体（空）         |
 
 #### 1.3.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/account/deleteAccount/user1`
+`https://127.0.0.1:9501/SafeKeeper/account/delete?account=user1`
 
 #### 1.3.4 出参示例
 
@@ -215,17 +221,19 @@
 #### 1.4.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址: `/account/accountList/{pageNumber}/{pageSize}`
+* 请求地址: `/account/list`
 * 请求方式：GET
 * 返回格式：JSON
 
 #### 1.4.2 参数信息详情
 
-| 序号   | 输入参数      | 类型          | 可为空 | 备注                       |
+| 序号 | 请求body   | 类型 | 可为空 | 备注       |
+| ---- | ---------- | ---- | ------ | ---------- |
+| 1    | pageSize   | Int  | 否     | 每页记录数 |
+| 2    | pageNumber | Int  | 否     | 当前页码   |
+
+| 序号   | 返回body      | 类型          | 可为空 | 备注                       |
 | ------ | ------------- | ------------- | ------ | -------------------------- |
-| 1      | pageSize      | Int           | 否     | 每页记录数                 |
-| 2      | pageNumber    | Int           | 否     | 当前页码                   |
-|        | 输出参数      | 类型          |        | 备注                       |
 | 1      | code          | Int           | 否     | 返回码，0：成功 其它：失败 |
 | 2      | message       | String        | 否     | 描述                       |
 | 3      | totalCount    | Int           | 否     | 总记录数                   |
@@ -245,7 +253,7 @@
 
 #### 1.4.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/account/accountList/1/10`
+`https://127.0.0.1:9501/SafeKeeper/account/list?pageNumber=1&pageSize=10`
 
 #### 1.4.4 出参示例
 
@@ -306,14 +314,16 @@
 
 #### 1.5.2 参数信息详情
 
-| 序号 | 输入参数       | 类型   | 可为空 | 备注                       |
-| 1    | oldAccountPwd | String | 否  | 旧密码          |
-| 2    | newAccountPwd | String | 否  | 新密码，要求6-20位字母数字下划线组成 |
-| ---- | ------------- | ------ | --- | ------------------------------------ |
-| 序号 | 输出参数      | 类型   |     | 备注                                 |
-| 1    | code          | Int    | 否  | 返回码，0：成功 其它：失败           |
-| 2    | message       | String | 否  | 描述                                 |
-| 3    | data          | object | 否  | 返回信息实体（空）                   |
+| 序号 | 请求body      | 类型   | 可为空 | 备注                                 |
+| ---- | ------------- | ------ | ------ | ------------------------------------ |
+| 1    | oldAccountPwd | String | 否     | 旧密码                               |
+| 2    | newAccountPwd | String | 否     | 新密码，要求6-20位字母数字下划线组成 |
+
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
+| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message  | String | 否     | 描述                       |
+| 3    | data     | object | 是     | 返回信息实体（空）         |
 
 
 ### 1.5.3 入参示例
@@ -358,9 +368,8 @@
 
 #### 1.6.2 参数信息详情
 
-| 序号 | 输入参数  | 类型   | 可为空 | 备注                       |
+| 序号 | 返回body  | 类型   | 可为空 | 备注                       |
 | ---- | --------- | ------ | ------ | -------------------------- |
-| 序号 | 输出参数  | 类型   |        | 备注                       |
 | 1    | code      | Int    | 否     | 返回码，0：成功 其它：失败 |
 | 2    | message   | String | 否     | 描述                       |
 | 3    | data      | object | 否     | 返回信息实体               |
@@ -379,8 +388,8 @@
     "code": 0,
     "message": "success",
     "data": {
-        "account": "admin",
-        "publicKey": "8d83963610117ed59cf2011d5b7434dca7bb570d4a16e63c66f0803f4c4b1c03a1125500e5ca699dfbb6b48d450a82a5020fcb3b43165b508c10cb1479c6ee49"
+        "creatorAccount": "admin",
+        "creatorPublicKey": "8d83963610117ed59cf2011d5b7434dca7bb570d4a16e63c66f0803f4c4b1c03a1125500e5ca699dfbb6b48d450a82a5020fcb3b43165b508c10cb1479c6ee49"
     }
 }
 ```
@@ -408,11 +417,11 @@
 
 #### 2.1.2 参数信息详情
 
-| 序号 | 请求body    | 类型          | 可为空 | 备注                       |
-| ---- | ----------- | ------------- | ------ | -------------------------- |
-| 1    | dataID      | String        | 否     | 数据标识                   |
-| 2    | cipherText1 | String        | 否     | 经账号创建者公钥加密的内容 |
-| 3    | cipherText2 | String        | 否     | 经账号提供的密码加密的内容 |
+| 序号 | 请求body    | 类型   | 可为空 | 备注                       |
+| ---- | ----------- | ------ | ------ | -------------------------- |
+| 1    | dataID      | String | 否     | 数据标识                   |
+| 2    | cipherText1 | String | 否     | 经账号创建者公钥加密的内容 |
+| 3    | cipherText2 | String | 否     | 经账号提供的密码加密的内容 |
 
 | 序号 | 返回body    | 类型          | 可为空 | 备注                       |
 | ---- | ----------- | ------------- | ------ | -------------------------- |
@@ -425,7 +434,7 @@
 | 3.4  | cipherText1 | String        | 否     | 经账号创建者公钥加密的内容 |
 | 3.5  | cipherText2 | String        | 否     | 经账号提供的密码加密的内容 |
 | 3.6  | createTime  | LocalDateTime | 否     | 数据托管时间               |
-| 3.7  | description | String        | 否     | 数据备注信息               |
+| 3.7  | description | String        | 是     | 数据备注信息               |
 
 ### 1.1.3 入参示例
 
@@ -452,7 +461,7 @@
         "cipherText1": "048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
         "cipherText2": "F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7",
         "createTime": "2020-06-22T17:03:08",
-        "description": ""
+        "description": null
     }
 }
 ```
@@ -477,10 +486,10 @@
 
 #### 2.2.2 参数信息详情
 
-| 序号 | 请求body | 类型   | 可为空 | 备注                       |
-| ---- | -------- | ------ | ------ | -------------------------- |
-| 1    | account  | String | 否     | 帐号名称                   |
-| 2    | dataID   | String | 否     | 数据标识                   |
+| 序号 | 请求body | 类型   | 可为空 | 备注     |
+| ---- | -------- | ------ | ------ | -------- |
+| 1    | account  | String | 否     | 帐号名称 |
+| 2    | dataID   | String | 否     | 数据标识 |
 
 | 序号 | 返回body | 类型   | 可为空 | 备注                       |
 | ---- | -------- | ------ | ------ | -------------------------- |
@@ -523,10 +532,10 @@
 
 #### 2.3.2 参数信息详情
 
-| 序号  | 输入body   | 类型          | 可为空 | 备注                       |
-| ----- | ---------- | ------------- | ------ | -------------------------- |
-| 1     | pageSize   | Int           | 否     | 每页记录数                 |
-| 2     | pageNumber | Int           | 否     | 当前页码                   |
+| 序号 | 输入body   | 类型 | 可为空 | 备注       |
+| ---- | ---------- | ---- | ------ | ---------- |
+| 1    | pageSize   | Int  | 否     | 每页记录数 |
+| 2    | pageNumber | Int  | 否     | 当前页码   |
 
 | 序号  | 返回body    | 类型          | 可为空 | 备注                       |
 | ----- | ----------- | ------------- | ------ | -------------------------- |
@@ -541,7 +550,7 @@
 | 4.1.4 | cipherText1 | String        | 否     | 经账号创建者公钥加密的内容 |
 | 4.1.5 | cipherText2 | String        | 否     | 经账号提供的密码加密的内容 |
 | 4.1.6 | createTime  | LocalDateTime | 否     | 数据托管时间               |
-| 4.1.7 | description | String        | 否     | 数据备注信息               |
+| 4.1.7 | description | String        | 是     | 数据备注信息               |
 
 #### 2.3.3 入参示例
 
@@ -562,7 +571,7 @@
             "cipherText1": "048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
             "cipherText2": "F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7",
             "createTime": "2020-06-22T17:03:08",
-            "description": ""
+            "description": null
         }
     ],
     "totalCount": 1
@@ -599,7 +608,7 @@
 | 3    | data       | object        | 否     | 返回信息实体               |
 | 3.1  | account    | String        | 否     | 帐号名称                   |
 | 3.2  | cipherText | String        | 否     | 经账号创建者公钥加密       |
-| 3.3  | createTime | LocalDateTime | 否     | 私钥托管时间               |
+| 3.3  | createTime | LocalDateTime | 否     | 核心数据托管时间           |
 | 3.4  | dataID     | String        | 否     | 数据标识                   |
 | 3.5  | privateKey | String        | 否     | 经账号提供的密码加密       |
 
@@ -621,7 +630,7 @@
         "cipherText1": "048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
         "cipherText2": "F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7",
         "createTime": "2020-06-22T17:03:08",
-        "description": ""
+        "description": null
     }
 }
 ```
@@ -824,6 +833,7 @@
 | ---- | ---------- | ------ | ------ | -------------------------- |
 | 1    | pageNumber | Int    | 否     | 每页记录数                 |
 | 2    | pageSize   | Int    | 否     | 当前页码                   |
+
 | 序号 | 返回body   | 类型   | 可为空 | 备注                       |
 | ---- | ---------- | ------ | ------ | -------------------------- |
 | 1    | code       | Int    | 否     | 返回码，0：成功 其它：失败 |
@@ -917,8 +927,6 @@
 * 请求方式：GET
 * 返回格式：JSON
 
-remove {value} to parameters
-
 #### 3.6.2 参数信息详情
 
 | 序号 | 请求body | 类型 | 可为空 | 备注     |
@@ -983,7 +991,7 @@ remove {value} to parameters
 #### 3.7.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址: `/dataVault/wedpr/vcl/getUnspent`
+* 请求地址: `/dataVault/wedpr/vcl/getUnspentAmount`
 * 请求方式：GET
 * 返回格式：JSON
 
@@ -998,7 +1006,7 @@ remove {value} to parameters
 
 #### 3.7.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/dataVault/wedpr/vcl/getUnspent`
+`https://127.0.0.1:9501/SafeKeeper/dataVault/wedpr/vcl/getUnspentAmount`
 
 #### 3.7.4 出参示例
 
@@ -1027,7 +1035,7 @@ remove {value} to parameters
 #### 3.8.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址: `/dataVault/wedpr/vcl/getSpent`
+* 请求地址: `/dataVault/wedpr/vcl/getSpentAmount`
 * 请求方式：GET
 * 返回格式：JSON
 
@@ -1042,7 +1050,7 @@ remove {value} to parameters
 
 #### 3.8.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/dataVault/wedpr/vcl/getSpent`
+`https://127.0.0.1:9501/SafeKeeper/dataVault/wedpr/vcl/getSpentAmount`
 
 #### 3.8.4 出参示例
 
@@ -1068,36 +1076,36 @@ remove {value} to parameters
 
 ## <span id="4">4 错误码说明</span>  [top](#catalog_top)
 
-| code   | message                                | type                          | description           |
-| ------ | -------------------------------------- | ----------------------------- | --------------------- |
-| 0      | success                                | return success                | 成功                  |
-| 100000 | system exception                       | system exception              | 系统错误              |
-| 200000 | database exception                     | business exception - database | 数据库操作异常        |
-| 200100 | account info already exists            | business exception - account  | 该账号已注册          |
-| 200101 | account info not exists                | business exception - account  | 该账号未注册          |
-| 200102 | account name empty                     | business exception - account  | 账号名称为空          |
-| 200103 | invalid account name                   | business exception - account  | 该账号不存在          |
-| 200104 | invalid account format                 | business exception - account  | 账号名称格式错误      |
-| 200105 | invalid password format                | business exception - account  | 登录密码格式错误      |
-| 200106 | password error                         | business exception - account  | 登录密码错误          |
-| 200107 | the new password cannot be same as old | business exception - account  | 新旧密码不能一致      |
-| 200108 | role id cannot be empty                | business exception - account  | 角色标识不能为空      |
-| 200109 | invalid role id                        | business exception - account  | 无效的角色标识        |
-| 200110 | lack of access to the account          | business exception - account  | 无访问该账号权限      |
-| 200111 | invalid public key length              | business exception - account  | 无效的公钥长度        |
-| 200200 | data info already exists               | business exception - data     | 该数据已托管          |
-| 200201 | data info not exists                   | business exception - data     | 该数据未托管          |
-| 200202 | data id empty                          | business exception - data     | 数据标识不能为空      |
-| 200203 | lack of access to the data             | business exception - data     | 无访问该数据权限      |
-| 200300 | invalid token                          | business exception - token    | 该Token不存在         |
-| 200301 | token expire                           | business exception - token    | 该Token超时           |
-| 200400 | insert data struct fail                | business exception - data     | 插入数据失败          |
-| 200401 | lack of access to the data             | business exception - data     | 无访问该数据权限      |
-| 200402 | data id empty                          | business exception - data     | 数据主标识不能为空    |
-| 200403 | data sub id empty                      | business exception - data     | 数据辅标识不能为空    |
-| 200404 | data not exists                        | business exception - data     | 该数据已存在          |
-| 200405 | data already exists                    | business exception - data     | 该数据尚未存在        |
-| 200406 | not sufficient tokens                  | business exception - token    | 余额不足              |
-| 300000 | user not logged in                     | auth exception                | 匿名用户无操作权限    |
-| 300001 | access denied                          | auth exception                | 管理员/账号无操作权限 |
-| 400000 | param exception                        | param exception               | 参数校验错误          |
+| code   | message                                | type                             | description           |
+| ------ | -------------------------------------- | -------------------------------- | --------------------- |
+| 0      | success                                | return success                   | 成功                  |
+| 100000 | system exception                       | system exception                 | 系统错误              |
+| 200000 | database exception                     | business exception - database    | 数据库操作异常        |
+| 200100 | account info already exists            | business exception - account     | 该账号已注册          |
+| 200101 | account info not exists                | business exception - account     | 该账号未注册          |
+| 200102 | account name empty                     | business exception - account     | 账号名称为空          |
+| 200103 | invalid account name                   | business exception - account     | 该账号不存在          |
+| 200104 | invalid account format                 | business exception - account     | 账号名称格式错误      |
+| 200105 | invalid password format                | business exception - account     | 登录密码格式错误      |
+| 200106 | password error                         | business exception - account     | 登录密码错误          |
+| 200107 | the new password cannot be same as old | business exception - account     | 新旧密码不能一致      |
+| 200108 | role id cannot be empty                | business exception - account     | 角色标识不能为空      |
+| 200109 | invalid role id                        | business exception - account     | 无效的角色标识        |
+| 200110 | lack of access to the account          | business exception - account     | 无访问该账号权限      |
+| 200111 | invalid public key length              | business exception - account     | 无效的公钥长度        |
+| 200200 | data info already exists               | business exception - data escrow | 该数据已托管          |
+| 200201 | data info not exists                   | business exception - data escrow | 该数据未托管          |
+| 200202 | data id empty                          | business exception - data escrow | 数据标识不能为空      |
+| 200203 | lack of access to the data             | business exception - data escrow | 无访问该数据权限      |
+| 200300 | invalid token                          | business exception - token       | 该Token不存在         |
+| 200301 | token expire                           | business exception - token       | 该Token超时           |
+| 200400 | insert data struct fail                | business exception - data vault  | 插入数据失败          |
+| 200401 | lack of access to the data             | business exception - data vault  | 无访问该数据权限      |
+| 200402 | data id empty                          | business exception - data vault  | 数据主标识不能为空    |
+| 200403 | data sub id empty                      | business exception - data vault  | 数据辅标识不能为空    |
+| 200404 | data not exists                        | business exception - data vault  | 该数据已存在          |
+| 200405 | data already exists                    | business exception - data vault  | 该数据尚未存在        |
+| 200900 | not sufficient tokens                  | business exception - other       | 余额不足              |
+| 300000 | user not logged in                     | auth exception                   | 匿名用户无操作权限    |
+| 300001 | access denied                          | auth exception                   | 管理员/账号无操作权限 |
+| 400000 | param exception                        | param exception                  | 参数校验错误          |

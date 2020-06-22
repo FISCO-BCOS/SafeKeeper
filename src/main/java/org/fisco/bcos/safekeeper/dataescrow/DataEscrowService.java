@@ -53,7 +53,7 @@ public class DataEscrowService {
         dataNotExist(account, dataID);
 
         // add data row
-        TbDataEscrowInfo rowInfo = new TbDataEscrowInfo(account, dataID, cipherText1, cipherText2, "");
+        TbDataEscrowInfo rowInfo = new TbDataEscrowInfo(account, dataID, cipherText1, cipherText2, null);
         Integer affectRow = dataEscrowMapper.addDataRow(rowInfo);
 
         // check result

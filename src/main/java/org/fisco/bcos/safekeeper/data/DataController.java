@@ -28,6 +28,7 @@ import org.fisco.bcos.safekeeper.base.tools.JacksonUtils;
 import org.fisco.bcos.safekeeper.data.entity.DataQueryParam;
 import org.fisco.bcos.safekeeper.data.entity.DataRequestInfo;
 import org.fisco.bcos.safekeeper.data.entity.TbDataInfo;
+import org.fisco.bcos.safekeeper.dataescrow.entity.TbDataEscrowInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -139,13 +140,22 @@ public class DataController extends BaseController {
         Instant startTime = Instant.now();
         log.info("start queryRawData. startTime: {} dataID:{} ", startTime.toEpochMilli(), dataID);
 
+        if (dataID == null || dataID.equals("")) {
+            throw new SafeKeeperException(ConstantCode.PARAM_EXCEPTION);
+        }
+
         // current
         String currentAccount = getCurrentAccount(request);
 
         // query
         DataQueryParam queryParams = new DataQueryParam(currentAccount, dataID);
         List<TbDataInfo> dataInfoList = dataService.queryData(queryParams);
-        baseResponse.setData(dataService.rawDataListToDataNode(dataInfoList));
+        if (dataInfoList.size() > 0) {
+            baseResponse.setData(dataService.rawDataListToDataNode(dataInfoList));
+        } else {
+            log.info("data info not exists");
+            throw new SafeKeeperException(ConstantCode.DATA_NOT_EXISTS);
+        }
 
         log.info("end queryRawData. useTime:{} result:{}", Duration.between(startTime, Instant.now()).toMillis(),
                 JacksonUtils.objToString(baseResponse));
@@ -213,21 +223,21 @@ public class DataController extends BaseController {
     /**
      * get total value of unspent token .
      */
-    @GetMapping(value = "/wedpr/vcl/getUnspent")
+    @GetMapping(value = "/wedpr/vcl/getUnspentAmount")
     @PreAuthorize(ConstantProperties.HAS_ROLE_VISITOR)
-    public BaseResponse getUnspent() throws SafeKeeperException {
+    public BaseResponse getUnspentAmount() throws SafeKeeperException {
         BaseResponse baseResponse = new BaseResponse(ConstantCode.SUCCESS);
         Instant startTime = Instant.now();
         // current
         String currentAccount = getCurrentAccount(request);
-        log.info("start wedpr/vcl/getUnspent. account: {} startTime:{} ",
+        log.info("start wedpr/vcl/getUnspentAmount. account: {} startTime:{} ",
                 currentAccount, startTime.toEpochMilli());
 
         // get total value
-        JsonNode dataNode = dataService.getUnspent(currentAccount);
+        JsonNode dataNode = dataService.getUnspentAmount(currentAccount);
         baseResponse.setData(dataNode);
 
-        log.info("end wedpr/vcl/getUnspent. useTime:{} result:{}",
+        log.info("end wedpr/vcl/getUnspentAmount. useTime:{} result:{}",
                 Duration.between(startTime, Instant.now()).toMillis(), JacksonUtils.objToString(baseResponse));
         return baseResponse;
     }
@@ -235,20 +245,20 @@ public class DataController extends BaseController {
     /**
      * get total value of spent token .
      */
-    @GetMapping(value = "/wedpr/vcl/getSpent")
+    @GetMapping(value = "/wedpr/vcl/getSpentAmount")
     @PreAuthorize(ConstantProperties.HAS_ROLE_VISITOR)
-    public BaseResponse getSpent() throws SafeKeeperException {
+    public BaseResponse getSpentAmount() throws SafeKeeperException {
         BaseResponse baseResponse = new BaseResponse(ConstantCode.SUCCESS);
         Instant startTime = Instant.now();
         // current
         String currentAccount = getCurrentAccount(request);
-        log.info("start wedpr/vcl/getSpent. account: {} startTime:{} ", currentAccount, startTime.toEpochMilli());
+        log.info("start wedpr/vcl/getSpentAmount. account: {} startTime:{} ", currentAccount, startTime.toEpochMilli());
 
         // get total value
-        JsonNode dataNode = dataService.getSpent(currentAccount);
+        JsonNode dataNode = dataService.getSpentAmount(currentAccount);
         baseResponse.setData(dataNode);
 
-        log.info("end wedpr/vcl/getSpent. useTime:{} result:{}",
+        log.info("end wedpr/vcl/getSpentAmount. useTime:{} result:{}",
                 Duration.between(startTime, Instant.now()).toMillis(), JacksonUtils.objToString(baseResponse));
         return baseResponse;
     }

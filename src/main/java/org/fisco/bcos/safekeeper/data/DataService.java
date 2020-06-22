@@ -312,7 +312,7 @@ public class DataService {
         return dataNode;
     }
 
-    public JsonNode getUnspent(String account) {
+    public JsonNode getUnspentAmount(String account) {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode dataNode = objectMapper.createObjectNode();
         List<String> unspentList = listOfValueWithTokenStatus(account,"0");
@@ -320,7 +320,7 @@ public class DataService {
         return dataNode;
     }
 
-    public JsonNode getSpent(String account) {
+    public JsonNode getSpentAmount(String account) {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode dataNode = objectMapper.createObjectNode();
         List<String> spentList = listOfValueWithTokenStatus(account,"1");

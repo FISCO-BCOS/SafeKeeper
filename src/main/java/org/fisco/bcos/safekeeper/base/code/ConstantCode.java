@@ -29,7 +29,8 @@ package org.fisco.bcos.safekeeper.base.code;
  * 1XX:account exception <br/>
  * 2XX:data escrow exception <br/>
  * 3XX:token exception <br/>
- * 4XX:data exception <br/>
+ * 4XX:data vault exception <br/>
+ * 9XX:other exception <br/>
  */
 
 public class ConstantCode {
@@ -97,7 +98,7 @@ public class ConstantCode {
 
     public static final RetCode DATA_EXISTS = RetCode.mark(200405, "data already exists");
 
-    public static final RetCode NOT_SUFFICIENT_TOKENS = RetCode.mark(200406, "not sufficient tokens");
+    public static final RetCode NOT_SUFFICIENT_TOKENS = RetCode.mark(200900, "not sufficient tokens");
 
     /* auth */
     public static final RetCode USER_NOT_LOGGED_IN = RetCode.mark(300000, "user not logged in");

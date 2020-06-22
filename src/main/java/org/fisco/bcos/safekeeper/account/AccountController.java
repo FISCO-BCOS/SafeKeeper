@@ -25,14 +25,7 @@ import org.fisco.bcos.safekeeper.base.tools.JacksonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.fisco.bcos.safekeeper.base.code.ConstantCode;
 import org.fisco.bcos.safekeeper.base.controller.BaseController;
 import org.fisco.bcos.safekeeper.base.entity.BasePageResponse;
@@ -57,7 +50,7 @@ public class AccountController extends BaseController {
     /**
      * add account info.
      */
-    @PostMapping(value = "/addAccount")
+    @PostMapping(value = "/add")
     @PreAuthorize(ConstantProperties.HAS_ROLE_ADMIN)
     public BaseResponse addAccountInfo(@RequestBody @Valid AccountInfo info, BindingResult result)
         throws SafeKeeperException {
@@ -86,10 +79,10 @@ public class AccountController extends BaseController {
     /**
      * query account list.
      */
-    @GetMapping(value = "/accountList/{pageNumber}/{pageSize}")
+    @GetMapping(value = "/list")
     @PreAuthorize(ConstantProperties.HAS_ROLE_ADMIN)
-    public BasePageResponse queryAccountList(@PathVariable("pageNumber") Integer pageNumber,
-        @PathVariable("pageSize") Integer pageSize) throws SafeKeeperException {
+    public BasePageResponse queryAccountList(@RequestParam(value="pageNumber") Integer pageNumber,
+                                             @RequestParam(value="pageSize") Integer pageSize) throws SafeKeeperException {
         BasePageResponse pagesponse = new BasePageResponse(ConstantCode.SUCCESS);
         Instant startTime = Instant.now();
 
@@ -137,9 +130,9 @@ public class AccountController extends BaseController {
     /**
      * delete account by id.
      */
-    @DeleteMapping(value = "/deleteAccount/{account}")
+    @DeleteMapping(value = "/delete")
     @PreAuthorize(ConstantProperties.HAS_ROLE_ADMIN)
-    public BaseResponse deleteAccount(@PathVariable("account") String account)
+    public BaseResponse deleteAccount(@RequestParam(value="account") String account)
         throws SafeKeeperException {
         BaseResponse baseResponse = new BaseResponse(ConstantCode.SUCCESS);
         Instant startTime = Instant.now();
@@ -147,7 +140,10 @@ public class AccountController extends BaseController {
 
         String currentAccount = getCurrentAccount(request);
         TbAccountInfo tbCurAccount = accountService.queryByAccount(account);
-        if (currentAccount == account || tbCurAccount == null || !currentAccount.equals(tbCurAccount.getCreator())) {
+        if (tbCurAccount == null) {
+            throw new SafeKeeperException(ConstantCode.ACCOUNT_NOT_EXISTS);
+        }
+        if (currentAccount == account || !currentAccount.equals(tbCurAccount.getCreator())) {
             log.info("lack of access to delete account");
             throw new SafeKeeperException(ConstantCode.LACK_ACCESS_ACCOUNT);
         }

@@ -20,12 +20,12 @@ import lombok.Data;
 @Data
 public class PublicKeyInfo {
 
-    private String account;
-    private String publicKey;
+    private String creatorAccount;
+    private String creatorPublicKey;
 
-    public PublicKeyInfo(String account, String publicKey) {
+    public PublicKeyInfo(String creatorAccount, String creatorPublicKey) {
         super();
-        this.account = account;
-        this.publicKey = publicKey;
+        this.creatorAccount = creatorAccount;
+        this.creatorPublicKey = creatorPublicKey;
     }
 }
