@@ -162,7 +162,7 @@ Update password successfully.
 管理员运行restorePrivateKey，恢复其生成的访客托管的私钥。参数：
 
 - 账号名称：需恢复的私钥所有者的账号名称
-- 私钥别名：需恢复的私钥标识
+- 数据标识：需恢复的私钥标识
 - 管理员私钥：管理员自身妥善保管的私钥，用于解密托管的密码密文，长度64，不区分大小写
   
 ```text
@@ -176,7 +176,7 @@ The private key "pkey1" of account "user1" is 2d330f79e17dd4645cc69d46222d82b853
 
 - 私钥文件：存储私钥信息的文件，文件格式为p12或者pem，存储路径为dist/accounts/目录。该目录的私钥文件可使用脚本`get_account.sh`或`get_gm_account.sh`生成
 - 加密密码：由访客提供用于对托管的私钥进行对称加密的密码，如果私钥文件为p12格式，该密码也用于解密p12文件
-- 私钥别名：[可选] 用于唯一标识该访客下的私钥，默认为该私钥生成的以太坊地址（0x开头）
+- 数据标识：[可选] 用于唯一标识该访客下的私钥，默认为该私钥生成的以太坊地址（0x开头）
   
 ```text
 [user1:visitor]> uploadPrivateKey 0xa424aa0a388e47bde6fb55c98ec2d6ba92e30f6b.p12 123456 pkey1
@@ -212,7 +212,7 @@ The count of keys uploaded by "user1" is 2.
 
 访客运行exportPrivateKey，找回其托管的私钥。参数：
 
-- 私钥别名：用于唯一标识该访客下的私钥
+- 数据标识：用于唯一标识该访客下的私钥
 - 加密密码：由访客提供用于对托管的私钥进行对称加密的密码
   
 ```text
@@ -224,7 +224,7 @@ The private key "pkey1" is 2d330f79e17dd4645cc69d46222d82b8532894d82bb14449da5f9
 
 访客运行deletePrivateKey，删除其托管的私钥。参数：
 
-- 私钥别名：用于唯一标识该访客下的私钥
+- 数据标识：用于唯一标识该访客下的私钥
   
 ```text
 [user1:visitor]> deletePrivateKey key1

@@ -13,19 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fisco.bcos.safekeeper.keyescrow.entity;
+package org.fisco.bcos.safekeeper.dataescrow.entity;
 
-import javax.validation.constraints.NotBlank;
-
+import org.fisco.bcos.safekeeper.base.entity.BaseQueryParam;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+/**
+ * param of query data list.
+ */
 @Data
-public class PrivateKeyInfo {
+@NoArgsConstructor
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class DataEscrowListParam extends BaseQueryParam {
+
     private String account;
-    @NotBlank
-    private String keyAlias;
-    @NotBlank
-    private String cipherText;
-    @NotBlank
-    private String privateKey;
+
+    public DataEscrowListParam(Integer start, Integer pageSize, String account, String flagSortedByTime) {
+        super(start, pageSize, flagSortedByTime);
+        this.account = account;
+    }
 }

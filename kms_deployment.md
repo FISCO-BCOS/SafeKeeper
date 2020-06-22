@@ -54,17 +54,17 @@ cd dist/script
 修改数据库连接信息：
 
 ```shell
-修改数据库名称：sed -i "s/fisco_safekeeper/${your_db_name}/g" kms.sh
-修改数据库用户名：sed -i "s/defaultAccount/${your_db_account}/g" kms.sh
-修改数据库密码：sed -i "s/defaultPassword/${your_db_password}/g" kms.sh
+修改数据库名称：sed -i "s/fisco_safekeeper/${your_db_name}/g" safekeeper.sh
+修改数据库用户名：sed -i "s/defaultAccount/${your_db_account}/g" safekeeper.sh
+修改数据库密码：sed -i "s/defaultPassword/${your_db_password}/g" safekeeper.sh
 ```
 
 例如：
 
 ```shell
-sed -i "s/fisco_safekeeper/my_safekeeper/g" kms.sh
-sed -i "s/defaultAccount/root/g" kms.sh
-sed -i "s/defaultPassword/123456/g" kms.sh
+sed -i "s/fisco_safekeeper/my_safekeeper/g" safekeeper.sh
+sed -i "s/defaultAccount/root/g" safekeeper.sh
+sed -i "s/defaultPassword/123456/g" safekeeper.sh
 ```
 
 ### 4.3 运行数据库脚本
@@ -72,13 +72,13 @@ sed -i "s/defaultPassword/123456/g" kms.sh
 执行命令：
 
 ```shell
-bash kms.sh ${dbIP} ${dbPort}
+bash safekeeper.sh ${dbIP} ${dbPort}
 ```
 
 例如：
 
 ```shell
-bash kms.sh 127.0.0.1 3306
+bash safekeeper.sh 127.0.0.1 3306
 ```
 
 数据库脚本执行后，密钥管理服务内置了管理员admin，登录密码为Abcd1234，私钥为56edd4d56db20ad3b7b387fb8963a639c020282c6a4195f7a699b1b487fb6567。

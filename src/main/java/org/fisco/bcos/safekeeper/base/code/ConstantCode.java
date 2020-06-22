@@ -27,8 +27,9 @@ package org.fisco.bcos.safekeeper.base.code;
  * C: error code <br/>
  * 0XX:database exception <br/>
  * 1XX:account exception <br/>
- * 2XX:key exception <br/>
+ * 2XX:data escrow exception <br/>
  * 3XX:token exception <br/>
+ * 4XX:data exception <br/>
  */
 
 public class ConstantCode {
@@ -72,13 +73,13 @@ public class ConstantCode {
 
     public static final RetCode INVALID_PUBLIC_KEY_LENGTH = RetCode.mark(200111, "invalid public key length");
 
-    public static final RetCode KEY_EXISTS = RetCode.mark(200200, "key info already exists");
+    public static final RetCode DATA_ESCROW_EXISTS = RetCode.mark(200200, "data info already exists");
 
-    public static final RetCode KEY_NOT_EXISTS = RetCode.mark(200201, "key info not exists");
+    public static final RetCode DATA_ESCROW_NOT_EXISTS = RetCode.mark(200201, "data info not exists");
 
-    public static final RetCode KEY_ALIASES_EMPTY = RetCode.mark(200202, "key aliases empty");
+    public static final RetCode DATA_ID_ESCROW_EMPTY = RetCode.mark(200202, "data id empty");
 
-    public static final RetCode LACK_ACCESS_KEY = RetCode.mark(200203, "lack of access to the key");
+    public static final RetCode LACK_ACCESS_DATA_ESCROW = RetCode.mark(200203, "lack of access to the data");
 
     public static final RetCode INVALID_TOKEN = RetCode.mark(200300, "invalid token");
 

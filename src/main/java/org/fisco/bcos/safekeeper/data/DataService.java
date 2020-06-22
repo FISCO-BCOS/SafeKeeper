@@ -139,8 +139,8 @@ public class DataService {
     public int countOfData(String account, String dataID, String dataSubID, int dataStatus) {
         log.debug("start countOfData. account: {} dataID: {} dataSubID: {} dataStatus: {} ",
                 account, dataID, dataSubID, dataStatus);
-        Integer keyCount = dataMapper.countOfData(account, dataID, dataSubID, dataStatus);
-        int count = keyCount == null ? 0 : keyCount.intValue();
+        Integer dataCount = dataMapper.countOfData(account, dataID, dataSubID, dataStatus);
+        int count = dataCount == null ? 0 : dataCount.intValue();
         log.debug("end countOfData. count: {} ", count);
         return count;
     }

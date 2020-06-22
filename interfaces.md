@@ -7,13 +7,13 @@
   - [1.3.删除子帐号](#1.3)
   - [1.4.查询子帐号列表](#1.4)
   - [1.5.更改当前密码](#1.5)
-  - [1.6.获取用于加密子账号托管私钥的公钥](#1.6)
-- [2.密钥管理模块](#2)
-  - [2.1.新增私钥](#2.1)
-  - [2.2.删除私钥](#2.2)
-  - [2.3.查询私钥列表](#2.3)
-  - [2.4.查询指定私钥](#2.4)
-- [3.数据管理模块](#3)
+  - [1.6.获取用于加密子账号托管核心数据的公钥](#1.6)
+- [2.核心数据管理模块](#2)
+  - [2.1.新增数据](#2.1)
+  - [2.2.删除数据](#2.2)
+  - [2.3.查询数据列表](#2.3)
+  - [2.4.查询指定数据](#2.4)
+- [3.数据存储模块](#3)
   - [3.1.新增数据](#3.1)
   - [3.2.修改数据](#3.2)
   - [3.3.查询指定数据](#3.3)
@@ -240,7 +240,7 @@
 | 4.1.7  | createTime    | LocalDateTime | 否     | 创建时间                   |
 | 4.1.8  | modifyTime    | LocalDateTime | 否     | 修改时间                   |
 | 4.1.9  | email         | String        | 是     | 用户邮箱                   |
-| 4.1.10 | publicKey     | String        | 否     | 用于加密子账号托管的私钥   |
+| 4.1.10 | publicKey     | String        | 否     | 用于加密子账号托管的数据   |
 | 4.1.11 | creator       | String        | 否     | 创建者账号                 |
 
 #### 1.4.3 入参示例
@@ -346,7 +346,7 @@
 }
 ```
 
-### <span id="1.6">1.6 获取用于加密子账号托管私钥的公钥</span>  [top](#catalog_top)
+### <span id="1.6">1.6 获取用于加密子账号托管核心数据的公钥</span>  [top](#catalog_top)
 
 #### 1.6.1 传输协议规范
 
@@ -365,7 +365,7 @@
 | 2    | message   | String | 否     | 描述                       |
 | 3    | data      | object | 否     | 返回信息实体               |
 | 3.1  | account   | String | 否     | 加密帐号（管理员）名称     |
-| 3.2  | publicKey | String | 否     | 用于加密子账号托管的私钥   |
+| 3.2  | publicKey | String | 否     | 用于加密子账号托管的数据   |
 
 ### 1.6.3 入参示例
 
@@ -394,43 +394,47 @@
 }
 ```
 
-## <span id="2">2 密钥管理模块</span>  [top](#catalog_top)
+## <span id="2">2 核心数据管理模块</span>  [top](#catalog_top)
 
-### <span id="2.1">2.1 新增私钥</span>  [top](#catalog_top)
+### <span id="2.1">2.1 新增数据</span>  [top](#catalog_top)
 
 #### 2.1.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址：`/escrow/addKey`
+* 请求地址：`/dataEscrow/add`
 * 请求方式：POST
 * 请求头：Content-type: application/json
 * 返回格式：JSON
 
 #### 2.1.2 参数信息详情
 
-| 序号 | 输入参数   | 类型          | 可为空 | 备注                       |
-| ---- | ---------- | ------------- | ------ | -------------------------- |
-| 1    | cipherText | String        | 否     | 经账号创建者公钥加密       |
-| 2    | keyAlias   | String        | 否     | 私钥别名                   |
-| 3    | privateKey | String        | 否     | 经账号提供的密码加密       |
-| 序号 | 输出参数   | 类型          |        | 备注                       |
-| 1    | code       | Int           | 否     | 返回码，0：成功 其它：失败 |
-| 2    | message    | String        | 否     | 描述                       |
-| 3    | data       | object        | 否     | 返回信息实体               |
-| 3.1  | account    | String        | 否     | 帐号名称                   |
-| 3.2  | cipherText | String        | 否     | 经账号创建者公钥加密       |
-| 3.3  | createTime | LocalDateTime | 否     | 私钥托管时间               |
-| 3.4  | keyAlias   | String        | 否     | 私钥别名                   |
-| 3.5  | privateKey | String        | 否     | 经账号提供的密码加密       |
+| 序号 | 请求body    | 类型          | 可为空 | 备注                       |
+| ---- | ----------- | ------------- | ------ | -------------------------- |
+| 1    | dataID      | String        | 否     | 数据标识                   |
+| 2    | cipherText1 | String        | 否     | 经账号创建者公钥加密的内容 |
+| 3    | cipherText2 | String        | 否     | 经账号提供的密码加密的内容 |
+
+| 序号 | 返回body    | 类型          | 可为空 | 备注                       |
+| ---- | ----------- | ------------- | ------ | -------------------------- |
+| 1    | code        | Int           | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message     | String        | 否     | 描述                       |
+| 3    | data        | object        | 否     | 返回信息实体               |
+| 3.1  | account     | String        | 否     | 帐号名称                   |
+| 3.2  | dataID      | String        | 否     | 数据标识                   |
+| 3.3  | dataStatus  | String        | 否     | 数据状态                   |
+| 3.4  | cipherText1 | String        | 否     | 经账号创建者公钥加密的内容 |
+| 3.5  | cipherText2 | String        | 否     | 经账号提供的密码加密的内容 |
+| 3.6  | createTime  | LocalDateTime | 否     | 数据托管时间               |
+| 3.7  | description | String        | 否     | 数据备注信息               |
 
 ### 1.1.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/escrow/addKey`
+`https://127.0.0.1:9501/SafeKeeper/dataEscrow/add`
 ```
 {
-    "cipherText":"048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
-    "keyAlias":"key1",
-    "privateKey":"F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7"
+    "dataID":"key1",
+    "cipherText1":"048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
+    "cipherText2":"F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7"
 }
 ```
 
@@ -443,10 +447,12 @@
     "message": "success",
     "data": {
         "account": "user1",
-        "keyAlias": "key1",
-        "cipherText": "048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
-        "privateKey": "F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7",
-        "createTime": "2020-05-19 20:53:33"
+        "dataID": "key1",
+        "dataStatus": 1,
+        "cipherText1": "048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
+        "cipherText2": "F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7",
+        "createTime": "2020-06-22T17:03:08",
+        "description": ""
     }
 }
 ```
@@ -460,29 +466,31 @@
 }
 ```
 
-### <span id="2.2">2.2 删除私钥</span>  [top](#catalog_top)
+### <span id="2.2">2.2 删除数据</span>  [top](#catalog_top)
 
 #### 2.2.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址：`/escrow/deleteKey/{account}/{keyAlias}`
+* 请求地址：`/dataEscrow/delete`
 * 请求方式：DELETE
 * 返回格式：JSON
 
 #### 2.2.2 参数信息详情
 
-| 序号 | 输入参数 | 类型   | 可为空 | 备注                       |
+| 序号 | 请求body | 类型   | 可为空 | 备注                       |
 | ---- | -------- | ------ | ------ | -------------------------- |
 | 1    | account  | String | 否     | 帐号名称                   |
-| 2    | keyAlias | String | 否     | 私钥别名                   |
-| 序号 | 输出参数 | 类型   |        | 备注                       |
+| 2    | dataID   | String | 否     | 数据标识                   |
+
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
 | 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
 | 2    | message  | String | 否     | 描述                       |
 | 3    | data     | object | 是     | 返回信息实体（空）         |
 
 #### 2.2.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/escrow/deleteKey/user1/key1`
+`https://127.0.0.1:9501/SafeKeeper/dataEscrow/delete?dataID=key1`
 
 #### 2.2.4 出参示例
 
@@ -504,36 +512,40 @@
 }
 ```
 
-###  <span id="2.3">2.3 查询私钥列表</span>  [top](#catalog_top)
+###  <span id="2.3">2.3 查询数据列表</span>  [top](#catalog_top)
 
 #### 2.3.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址: `/escrow/keyList/{pageSize}/{pageNumber}`
+* 请求地址: `/dataEscrow/list`
 * 请求方式：GET
 * 返回格式：JSON
 
 #### 2.3.2 参数信息详情
 
-| 序号  | 输入参数   | 类型          | 可为空 | 备注                       |
+| 序号  | 输入body   | 类型          | 可为空 | 备注                       |
 | ----- | ---------- | ------------- | ------ | -------------------------- |
 | 1     | pageSize   | Int           | 否     | 每页记录数                 |
 | 2     | pageNumber | Int           | 否     | 当前页码                   |
-|       | 输出参数   | 类型          |        | 备注                       |
-| 1     | code       | Int           | 否     | 返回码，0：成功 其它：失败 |
-| 2     | message    | String        | 否     | 描述                       |
-| 3     | totalCount | Int           | 否     | 总记录数                   |
-| 4     | data       | List          | 是     | 信息列表                   |
-| 4.1   |            | Object        |        | 信息对象                   |
-| 4.1.1 | account    | String        | 否     | 帐号名称                   |
-| 4.1.2 | cipherText | String        | 否     | 经账号创建者公钥加密       |
-| 4.1.3 | createTime | LocalDateTime | 否     | 私钥托管时间               |
-| 4.1.4 | keyAlias   | String        | 否     | 私钥别名                   |
-| 4.1.5 | privateKey | String        | 否     | 经账号提供的密码加密       |
+
+| 序号  | 返回body    | 类型          | 可为空 | 备注                       |
+| ----- | ----------- | ------------- | ------ | -------------------------- |
+| 1     | code        | Int           | 否     | 返回码，0：成功 其它：失败 |
+| 2     | message     | String        | 否     | 描述                       |
+| 3     | totalCount  | Int           | 否     | 总记录数                   |
+| 4     | data        | List          | 是     | 信息列表                   |
+| 4.1   |             | Object        |        | 信息对象                   |
+| 4.1.1 | account     | String        | 否     | 帐号名称                   |
+| 4.1.2 | dataID      | String        | 否     | 数据标识                   |
+| 4.1.3 | dataStatus  | String        | 否     | 数据状态                   |
+| 4.1.4 | cipherText1 | String        | 否     | 经账号创建者公钥加密的内容 |
+| 4.1.5 | cipherText2 | String        | 否     | 经账号提供的密码加密的内容 |
+| 4.1.6 | createTime  | LocalDateTime | 否     | 数据托管时间               |
+| 4.1.7 | description | String        | 否     | 数据备注信息               |
 
 #### 2.3.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/escrow/keyList/1/10`
+`https://127.0.0.1:9501/SafeKeeper/dataEscrow/list?pageNumber=1&pageSize=10`
 
 #### 2.3.4 出参示例
 
@@ -544,11 +556,13 @@
     "message": "success",
     "data": [
         {
-            "account":"user1",
-            "cipherText":"048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
-            "createTime":"2020-05-14T20:00:39",
-            "keyAlias":"key1",
-            "privateKey":"F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7"
+            "account": "user1",
+            "dataID": "key1",
+            "dataStatus": 1,
+            "cipherText1": "048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
+            "cipherText2": "F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7",
+            "createTime": "2020-06-22T17:03:08",
+            "description": ""
         }
     ],
     "totalCount": 1
@@ -564,12 +578,12 @@
 }
 ```
 
-###  <span id="2.4">2.4 查询指定私钥</span>  [top](#catalog_top)
+###  <span id="2.4">2.4 查询指定数据</span>  [top](#catalog_top)
 
 #### 2.4.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址: `/escrow/queryKey/{account}/{keyAlias}`
+* 请求地址: `/dataEscrow/query`
 * 请求方式：GET
 * 返回格式：JSON
 
@@ -578,7 +592,7 @@
 | 序号 | 输入参数   | 类型          | 可为空 | 备注                       |
 | ---- | ---------- | ------------- | ------ | -------------------------- |
 | 1    | account    | String        | 否     | 帐号名称                   |
-| 2    | keyAlias   | String        | 否     | 私钥别名                   |
+| 2    | dataID     | String        | 否     | 数据标识                   |
 |      | 输出参数   | 类型          |        | 备注                       |
 | 1    | code       | Int           | 否     | 返回码，0：成功 其它：失败 |
 | 2    | message    | String        | 否     | 描述                       |
@@ -586,12 +600,12 @@
 | 3.1  | account    | String        | 否     | 帐号名称                   |
 | 3.2  | cipherText | String        | 否     | 经账号创建者公钥加密       |
 | 3.3  | createTime | LocalDateTime | 否     | 私钥托管时间               |
-| 3.4  | keyAlias   | String        | 否     | 私钥别名                   |
+| 3.4  | dataID     | String        | 否     | 数据标识                   |
 | 3.5  | privateKey | String        | 否     | 经账号提供的密码加密       |
 
 #### 2.4.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/escrow/queryKey/user1/key1`
+`https://127.0.0.1:9501/SafeKeeper/dataEscrow/query?account=user1&dataID=key1`
 
 #### 2.4.4 出参示例
 
@@ -601,11 +615,13 @@
     "code": 0,
     "message": "success",
     "data": {
-        "account":"user1",
-        "cipherText":"048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
-        "createTime":"2020-05-14T20:00:39",
-        "keyAlias":"key1",
-        "privateKey":"F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7"
+        "account": "user1",
+        "dataID": "key1",
+        "dataStatus": 1,
+        "cipherText1": "048A292A94A6DDF84006C074B63627A7FAC1CD4B84EFC556124C1258CFEDC402285A66F9AB27310FA5E253D65038A664A649C35F259882E9678034928158AA90DD518C78A6B81F3A7075E74DC9320E32DB25596249EB1AC404955AC715E3812C0B61204939E8AE5CE430DBBDD014F96DA42B824C994266B2CD7A49AC92254EC2534D6AAB79F4E36367EB3EDEE6461A7A26A1A7038B",
+        "cipherText2": "F2764D0F7118080EABC9236830BC714B2B249AE209C6D969E9E953D7283B42E9C9600DA7F5447158C83410CC5E91514C05B8234003465978C924D7F505221CFACB53B966BB008522E33737F44C63B4E7",
+        "createTime": "2020-06-22T17:03:08",
+        "description": ""
     }
 }
 ```
@@ -619,13 +635,13 @@
 }
 ```
 
-## <span id="3">3 数据管理模块</span>  [top](#catalog_top)
+## <span id="3">3 数据存储模块</span>  [top](#catalog_top)
 
 以下请求均带有header信息。
 
-| 序号 | 请求header         | 类型   | 可为空 | 备注                   |
-| ---- | ------------------ | ------ | ------ | ---------------------- |
-| 1    | AuthorizationToken | String | 否     | 会话标识               |
+| 序号 | 请求header         | 类型   | 可为空 | 备注     |
+| ---- | ------------------ | ------ | ------ | -------- |
+| 1    | AuthorizationToken | String | 否     | 会话标识 |
 
 ### <span id="3.1">3.1 新增数据</span>  [top](#catalog_top)
 
@@ -639,16 +655,16 @@
 
 #### 3.1.2 参数信息详情
 
-| 序号 | 请求body | 类型   | 可为空 | 备注                           |
-| ---- | -------- | ------ | ------ | ------------------------------ |
-| 1    | key      | String | 否     | 新增的数据主键                 |
-| 2    | value    | object | 否     | 新增的数据内容（Json格式）     |
+| 序号 | 请求body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
+| 1    | key      | String | 否     | 新增的数据主键             |
+| 2    | value    | object | 否     | 新增的数据内容（Json格式） |
 
-| 序号 | 返回body | 类型   | 可为空 | 备注                           |
-| ---- | -------- | ------ | ------ | ------------------------------ |
-| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败     |
-| 2    | message  | String | 否     | 描述                           |
-| 3    | data     | object | 是     | 返回信息实体（空）             |
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
+| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message  | String | 否     | 描述                       |
+| 3    | data     | object | 是     | 返回信息实体（空）         |
 
 ### 3.1.3 入参示例
 
@@ -703,11 +719,11 @@
 | 1    | key      | String | 否     | 修改的数据主键                   |
 | 2    | value    | object | 否     | 修改的数据内容（Json格式，增量） |
 
-| 序号 | 返回body | 类型   | 可为空 | 备注                             |
-| ---- | -------- | ------ | ------ | -------------------------------- |
-| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败       |
-| 2    | message  | String | 否     | 描述                             |
-| 3    | data     | object | 是     | 返回信息实体（空）               |
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
+| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message  | String | 否     | 描述                       |
+| 3    | data     | object | 是     | 返回信息实体（空）         |
 
 ### 3.2.3 入参示例
 
@@ -753,15 +769,15 @@
 
 #### 3.3.2 参数信息详情
 
-| 序号 | 请求body | 类型   | 可为空 | 备注                             |
-| ---- | -------- | ------ | ------ | -------------------------------- |
-| 1    | dataID   | String | 否     | 数据标识                         |
+| 序号 | 请求body | 类型   | 可为空 | 备注     |
+| ---- | -------- | ------ | ------ | -------- |
+| 1    | dataID   | String | 否     | 数据标识 |
 
-| 序号 | 返回body | 类型   | 可为空 | 备注                             |
-| ---- | -------- | ------ | ------ | -------------------------------- |
-| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败       |
-| 2    | message  | String | 否     | 描述                             |
-| 3    | data     | object | 是     | 返回信息实体                     |
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
+| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message  | String | 否     | 描述                       |
+| 3    | data     | object | 是     | 返回信息实体               |
 
 #### 3.3.3 入参示例
 
@@ -808,7 +824,7 @@
 | ---- | ---------- | ------ | ------ | -------------------------- |
 | 1    | pageNumber | Int    | 否     | 每页记录数                 |
 | 2    | pageSize   | Int    | 否     | 当前页码                   |
-| 序号 | 请求body   | 类型   | 可为空 | 备注                       |
+| 序号 | 返回body   | 类型   | 可为空 | 备注                       |
 | ---- | ---------- | ------ | ------ | -------------------------- |
 | 1    | code       | Int    | 否     | 返回码，0：成功 其它：失败 |
 | 2    | message    | String | 否     | 描述                       |
@@ -867,9 +883,9 @@
 
 #### 3.5.2 参数信息详情
 
-| 序号 | 请求body | 类型   | 可为空 | 备注                       |
-| ---- | -------- | ------ | ------ | -------------------------- |
-| 1    | dataID   | String | 否     | 数据标识                   |
+| 序号 | 请求body | 类型   | 可为空 | 备注     |
+| ---- | -------- | ------ | ------ | -------- |
+| 1    | dataID   | String | 否     | 数据标识 |
 
 | 序号 | 返回body | 类型   | 可为空 | 备注                       |
 | ---- | -------- | ------ | ------ | -------------------------- |
@@ -905,16 +921,16 @@ remove {value} to parameters
 
 #### 3.6.2 参数信息详情
 
-| 序号 | 请求body | 类型    | 可为空 | 备注                       |
-| ---- | -------- | ------- | ------ | -------------------------- |
-| 1    | value    | long    | 否     | 目标金额                   |
+| 序号 | 请求body | 类型 | 可为空 | 备注     |
+| ---- | -------- | ---- | ------ | -------- |
+| 1    | value    | long | 否     | 目标金额 |
 
-| 序号 | 请求body | 类型    | 可为空 | 备注                       |
-| ---- | -------- | ------- | ------ | -------------------------- |
-| 1    | code     | Int     | 否     | 返回码，0：成功 其它：失败 |
-| 2    | message  | String  | 否     | 描述                       |
-| 3    | data     | Object  | 是     | 信息列表                   |
-| 3.1  |          | Object  |        | 信息对象                   |
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
+| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message  | String | 否     | 描述                       |
+| 3    | data     | Object | 是     | 信息列表                   |
+| 3.1  |          | Object |        | 信息对象                   |
 
 #### 3.6.3 入参示例
 
@@ -973,12 +989,12 @@ remove {value} to parameters
 
 #### 3.7.2 参数信息详情
 
-| 序号 | 输出body | 类型    | 可为空 | 备注                       |
-| ---- | -------- | ------- | ------ | -------------------------- |
-| 1    | code     | Int     | 否     | 返回码，0：成功 其它：失败 |
-| 2    | message  | String  | 否     | 描述                       |
-| 3    | data     | Object  | 否     | 返回信息实体               |
-| 3.1  | unspent  | long    | 否     | 尚未花费金额总和            |
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
+| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message  | String | 否     | 描述                       |
+| 3    | data     | Object | 否     | 返回信息实体               |
+| 3.1  | unspent  | long   | 否     | 尚未花费金额总和           |
 
 #### 3.7.3 入参示例
 
@@ -1017,12 +1033,12 @@ remove {value} to parameters
 
 #### 3.8.2 参数信息详情
 
-| 序号 | 输出body | 类型    | 可为空 | 备注                       |
-| ---- | -------- | ------- | ------ | -------------------------- |
-| 1    | code     | Int     | 否     | 返回码，0：成功 其它：失败 |
-| 2    | message  | String  | 否     | 描述                       |
-| 3    | data     | Object  | 否     | 返回信息实体               |
-| 3.1  | spent    | long    | 否     | 已花费金额总和             |
+| 序号 | 返回body | 类型   | 可为空 | 备注                       |
+| ---- | -------- | ------ | ------ | -------------------------- |
+| 1    | code     | Int    | 否     | 返回码，0：成功 其它：失败 |
+| 2    | message  | String | 否     | 描述                       |
+| 3    | data     | Object | 否     | 返回信息实体               |
+| 3.1  | spent    | long   | 否     | 已花费金额总和             |
 
 #### 3.8.3 入参示例
 
@@ -1069,10 +1085,10 @@ remove {value} to parameters
 | 200109 | invalid role id                        | business exception - account  | 无效的角色标识        |
 | 200110 | lack of access to the account          | business exception - account  | 无访问该账号权限      |
 | 200111 | invalid public key length              | business exception - account  | 无效的公钥长度        |
-| 200200 | key info already exists                | business exception - key      | 该私钥已托管          |
-| 200201 | key info not exists                    | business exception - key      | 该私钥未托管          |
-| 200202 | key aliases empty                      | business exception - key      | 私钥标识不能为空      |
-| 200203 | lack of access to the key              | business exception - key      | 无访问该私钥权限      |
+| 200200 | data info already exists               | business exception - data     | 该数据已托管          |
+| 200201 | data info not exists                   | business exception - data     | 该数据未托管          |
+| 200202 | data id empty                          | business exception - data     | 数据标识不能为空      |
+| 200203 | lack of access to the data             | business exception - data     | 无访问该数据权限      |
 | 200300 | invalid token                          | business exception - token    | 该Token不存在         |
 | 200301 | token expire                           | business exception - token    | 该Token超时           |
 | 200400 | insert data struct fail                | business exception - data     | 插入数据失败          |

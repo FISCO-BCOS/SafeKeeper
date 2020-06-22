@@ -13,30 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fisco.bcos.safekeeper.keyescrow;
+package org.fisco.bcos.safekeeper.dataescrow;
 
-import org.fisco.bcos.safekeeper.keyescrow.entity.KeyListParam;
-import org.fisco.bcos.safekeeper.keyescrow.entity.TbPKeyInfo;
 import org.apache.ibatis.annotations.Param;
+import org.fisco.bcos.safekeeper.dataescrow.entity.TbDataEscrowInfo;
+import org.fisco.bcos.safekeeper.dataescrow.entity.DataEscrowListParam;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 /**
- * mapper about key escrow.
+ * mapper about data escrow.
  */
 @Repository
-public interface KeyEscrowMapper {
+public interface DataEscrowMapper {
 
-    Integer addKeyRow(TbPKeyInfo tbAccount);
+    Integer addDataRow(TbDataEscrowInfo tbDataEscrowInfo);
 
-    TbPKeyInfo queryByAccountWithKey(@Param("account") String account, @Param("keyAlias") String keyAlias);
+    TbDataEscrowInfo queryData(@Param("account") String account, @Param("dataID") String dataID);
 
-    Integer deleteKeyRow(@Param("account") String account, @Param("keyAlias") String keyAlias);
+    Integer deleteDataRow(@Param("account") String account, @Param("dataID") String dataID);
 
-    Integer countOfAccountWithKey(@Param("account") String account, @Param("keyAlias") String keyAlias);
+    Integer countOfData(@Param("account") String account, @Param("dataID") String dataID);
 
-    Integer countOfKeyByAccount(@Param("account") String account);
+    Integer countOfDataOwnedByAccount(@Param("account") String account);
 
-    List<TbPKeyInfo> listOfKeyByAccount(@Param("param") KeyListParam param);
+    List<TbDataEscrowInfo> listOfDataOwnedByAccount(@Param("param") DataEscrowListParam param);
 }

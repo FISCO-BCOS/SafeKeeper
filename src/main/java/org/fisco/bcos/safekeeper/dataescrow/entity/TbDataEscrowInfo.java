@@ -13,38 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.fisco.bcos.safekeeper.keyescrow.entity;
+package org.fisco.bcos.safekeeper.dataescrow.entity;
 
 import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
- * Entity class of table tb_pkey.
+ * Entity class of table tb_data_escrow_info.
  */
 @Data
-public class TbPKeyInfo {
+public class TbDataEscrowInfo {
 
     private String account;
-    private String keyAlias;
-    private String cipherText;
-    private String privateKey;
+    private String dataID;
+    private Integer dataStatus;
+    private String cipherText1;
+    private String cipherText2;
     private LocalDateTime createTime;
+    private String description;
 
-    public TbPKeyInfo() {
+
+    public TbDataEscrowInfo() {
         super();
     }
 
-    public TbPKeyInfo(String account, String keyAlias) {
+    public TbDataEscrowInfo(String account, String dataID, String cipherText1, String cipherText2, String description) {
         super();
         this.account = account;
-        this.keyAlias = keyAlias;
-    }
-
-    public TbPKeyInfo(String account, String keyAlias, String cipherText, String privateKey) {
-        super();
-        this.account = account;
-        this.keyAlias = keyAlias;
-        this.cipherText = cipherText;
-        this.privateKey = privateKey;
+        this.dataID = dataID;
+        this.cipherText1 = cipherText1;
+        this.cipherText2 = cipherText2;
+        this.description = description;
     }
 }

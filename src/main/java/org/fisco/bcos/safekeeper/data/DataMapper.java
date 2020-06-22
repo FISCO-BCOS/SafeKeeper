@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * mapper about key escrow.
+ * mapper about data.
  */
 @Repository
 public interface DataMapper {
