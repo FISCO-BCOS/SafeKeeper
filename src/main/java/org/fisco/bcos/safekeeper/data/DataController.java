@@ -118,7 +118,7 @@ public class DataController extends BaseController {
             // update data row
             dataService.updateDataRow(dataInfo);
         }*/
-        // add data row
+        // update data row
         dataService.updateDataBatch(dataInfoList);
 
         /*DataQueryParam queryParams = new DataQueryParam(currentAccount, dataInfoList.get(0).getDataID());
@@ -282,6 +282,43 @@ public class DataController extends BaseController {
 
         log.info("end wedpr/vcl/getCredentialList. useTime:{} result:{}",
                 Duration.between(startTime, Instant.now()).toMillis(), JacksonUtils.objToString(baseResponse));
+        return baseResponse;
+    }
+
+    /**
+     * update raw data.
+     */
+    @PutMapping(value = "/spend")
+    @PreAuthorize(ConstantProperties.HAS_ROLE_VISITOR)
+    public BaseResponse updateRawDataBatch(@RequestBody @Valid String spendListInfo, BindingResult result)
+            throws SafeKeeperException {
+        checkBindResult(result);
+        BaseResponse baseResponse = new BaseResponse(ConstantCode.SUCCESS);
+        Instant startTime = Instant.now();
+        log.info("start updateRawDataBatch. startTime:{} dataInfo:{}", startTime.toEpochMilli(), spendListInfo);
+
+        // current
+        String currentAccount = getCurrentAccount(request);
+
+        // dataJson to independent data row
+        List<TbDataInfo> dataInfoList = new ArrayList<>();
+        JsonNode dataList = JacksonUtils.stringToJsonNode(spendListInfo);
+        for (int i = 0; i < dataList.size(); i++) {
+            JsonNode dataNode = dataList.get(i);
+            String dataID = dataNode.get("key").asText();
+            Iterator<Map.Entry<String,JsonNode>> jsonNodes = dataNode.get("value").fields();
+            while (jsonNodes.hasNext()) {
+                Map.Entry<String, JsonNode> node = jsonNodes.next();
+                TbDataInfo dataInfo = new TbDataInfo(currentAccount, dataID, node.getKey(), node.getValue().asText(),
+                        "", "", "");
+                dataInfoList.add(dataInfo);
+            }
+        }
+        // update data row batch
+        dataService.updateDataBatch(dataInfoList);
+
+       log.info("end updateRawDataBatch. useTime:{} result:{}", Duration.between(startTime, Instant.now()).toMillis(),
+                JacksonUtils.objToString(baseResponse));
         return baseResponse;
     }
 
