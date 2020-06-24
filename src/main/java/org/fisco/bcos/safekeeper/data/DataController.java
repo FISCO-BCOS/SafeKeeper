@@ -309,8 +309,7 @@ public class DataController extends BaseController {
             Iterator<Map.Entry<String,JsonNode>> jsonNodes = dataNode.get("value").fields();
             while (jsonNodes.hasNext()) {
                 Map.Entry<String, JsonNode> node = jsonNodes.next();
-                TbDataInfo dataInfo = new TbDataInfo(currentAccount, dataID, node.getKey(), node.getValue().asText(),
-                        "", "", "");
+                TbDataInfo dataInfo = new TbDataInfo(currentAccount, dataID, node.getKey(), node.getValue().asText());
                 dataInfoList.add(dataInfo);
             }
         }

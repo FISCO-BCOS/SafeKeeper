@@ -278,7 +278,7 @@ public class DataService {
             for (TokenInfo token : tokens) {
                 selectedTokens.add(token.getKey());
                 target -= token.getValue();
-                if (target < 0) {
+                if (target <= 0) {
                     break;
                 }
             }
@@ -353,8 +353,7 @@ public class DataService {
         Iterator<Map.Entry<String,JsonNode>> jsonNodes = data.getValue().fields();
         while (jsonNodes.hasNext()) {
             Map.Entry<String, JsonNode> node = jsonNodes.next();
-            TbDataInfo dataInfo = new TbDataInfo(currentAccount, dataID, node.getKey(), node.getValue().asText(),
-                        "", "", "");
+            TbDataInfo dataInfo = new TbDataInfo(currentAccount, dataID, node.getKey(), node.getValue().asText());
             dataInfoList.add(dataInfo);
         }
         return dataInfoList;

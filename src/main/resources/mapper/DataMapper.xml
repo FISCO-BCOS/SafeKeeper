@@ -9,20 +9,17 @@
     <id column="data_sub_id" javaType="java.lang.String" jdbcType="VARCHAR" property="dataSubID"/>
     <result column="data_status" javaType="java.lang.Integer" jdbcType="INTEGER" property="dataStatus"/>
     <result column="plain_text" javaType="java.lang.String" jdbcType="VARCHAR" property="plainText"/>
-    <result column="cipher_text1" javaType="java.lang.String" jdbcType="VARCHAR" property="cipherText1"/>
-    <result column="cipher_text2" javaType="java.lang.String" jdbcType="VARCHAR" property="cipherText2"/>
     <result column="create_time" javaType="java.time.LocalDateTime" jdbcType="TIMESTAMP" property="createTime"/>
-    <result column="description" javaType="java.lang.String" jdbcType="INTEGER" property="description"/>
   </resultMap>
 
   <sql id="ROW_COLUMN">
-    account,data_id,data_sub_id,plain_text,cipher_text1,cipher_text2,create_time,description
+    account,data_id,data_sub_id,plain_text,create_time
   </sql>
 
   <insert id="addDataRow" parameterType="org.fisco.bcos.safekeeper.data.entity.TbDataInfo">
     insert into tb_data_info
     (<include refid="ROW_COLUMN"/>)
-    values(#{account},#{dataID},#{dataSubID},#{plainText},#{cipherText1},#{cipherText2},NOW(),#{description})
+    values(#{account},#{dataID},#{dataSubID},#{plainText},NOW())
   </insert>
 
   <update id="updateDataRow" parameterType="org.fisco.bcos.safekeeper.data.entity.TbDataInfo">
@@ -30,7 +27,7 @@
     <if test="dataStatus != null and dataStatus != 0">
       data_status=#{dataStatus},
     </if>
-    plain_text=#{plainText},cipher_text1=#{cipherText1},cipher_text2=#{cipherText2}
+    plain_text=#{plainText}
     where BINARY account=#{account}
     and data_id = #{dataID}
     and data_sub_id = #{dataSubID}

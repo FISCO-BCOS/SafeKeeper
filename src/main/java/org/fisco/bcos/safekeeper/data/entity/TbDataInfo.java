@@ -29,25 +29,18 @@ public class TbDataInfo {
     private String dataSubID;
     private Integer dataStatus;
     private String plainText;
-    private String cipherText1;
-    private String cipherText2;
     private LocalDateTime createTime;
-    private String description;
 
 
     public TbDataInfo() {
         super();
     }
 
-    public TbDataInfo(String account, String dataID, String dataSubID, String plainText,
-                      String cipherText1, String cipherText2, String description) {
+    public TbDataInfo(String account, String dataID, String dataSubID, String plainText) {
         super();
         this.account = account;
         this.dataID = dataID;
         this.dataSubID = dataSubID;
         this.plainText = plainText;
-        this.cipherText1 = cipherText1;
-        this.cipherText2 = cipherText2;
-        this.description = description;
     }
 }

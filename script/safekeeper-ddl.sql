@@ -62,11 +62,8 @@ CREATE TABLE IF NOT EXISTS tb_data_info (
   data_id varchar(512) NOT NULL COMMENT '数据标识',
   data_sub_id varchar(128) NOT NULL COMMENT '数据副标识',
   data_status int(1) NOT NULL DEFAULT '1' COMMENT '状态（1-正常 2-不可用） 默认1',
-  plain_text text NOT NULL COMMENT '用户托管的数据明文',
-  cipher_text1 text NOT NULL COMMENT '用户托管的数据密文（可为经账号创建者公钥加密的数据密文）',
-  cipher_text2 text NOT NULL COMMENT '用户托管的数据密文（可为经账号自身加密密码加密的数据密文）',
-  create_time datetime DEFAULT NULL COMMENT '托管数据的时间',
-  description text COMMENT '备注',
+  plain_text text NOT NULL COMMENT '用户上传的数据',
+  create_time datetime DEFAULT NULL COMMENT '上传数据的时间',
   PRIMARY KEY (account,data_id,data_sub_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据信息表';
 
