@@ -224,6 +224,42 @@ public class DataController extends BaseController {
     }
 
     /**
+     * query raw data list.
+     */
+    @GetMapping(value = "/wedpr/vcl/v1/credentials/status")
+    @PreAuthorize(ConstantProperties.HAS_ROLE_VISITOR)
+    public BasePageResponse listCredentialsByStatus(@RequestParam(value="pageNumber") Integer pageNumber,
+                                                    @RequestParam(value="pageSize") Integer pageSize,
+                                                    @RequestParam(value="status") String status)
+            throws SafeKeeperException {
+        BasePageResponse pagesponse = new BasePageResponse(ConstantCode.SUCCESS);
+        Instant startTime = Instant.now();
+        log.info("start listRawData. startTime:{} pageNumber:{} pageSize:{} status:{}",
+                startTime.toEpochMilli(), pageNumber, pageSize, status);
+
+        String currentAccount = getCurrentAccount(request);
+
+        List<String> dataIdList = dataService.listOfDataIdByCoinStatus(currentAccount, status);
+        int count = dataIdList.size();
+        List<JsonNode> listOfData = new ArrayList<>();
+        if (count > 0) {
+            Integer start = ((pageNumber-1)*pageSize<0)?0:(pageNumber-1)*pageSize;
+            Integer end = (pageNumber*pageSize>count)?count:pageNumber*pageSize;
+            for (Integer i = start; i < end; i++) {
+                DataQueryParam queryParams = new DataQueryParam(currentAccount, dataIdList.get(i));
+                List<TbDataInfo> dataInfoList = dataService.queryData(queryParams);
+                listOfData.add(dataService.rawDataListToDataNode(dataInfoList));
+            }
+        }
+        pagesponse.setData(listOfData);
+        pagesponse.setTotalCount(count);
+
+        log.info("end listRawData. useTime:{} result:{}",
+                Duration.between(startTime, Instant.now()).toMillis(), JacksonUtils.objToString(pagesponse));
+        return pagesponse;
+    }
+
+    /**
      * get total value of unspent token .
      */
     @GetMapping(value = "/wedpr/vcl/v1/credentials/balance")

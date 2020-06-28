@@ -233,6 +233,13 @@ public class DataService {
         return list;
     }
 
+    public List<String> listOfDataIdByCoinStatus(String account, String plainText) {
+        log.debug("start listOfDataIdByCoinStatus. account:{} plainText: {} ", account, plainText);
+        List<String> list = dataMapper.listOfDataIdByCoinStatus(account, plainText);
+        log.debug("end listOfDataIdByCoinStatus. list:{} ", JacksonUtils.objToString(list));
+        return list;
+    }
+
     public List<JsonNode> preAuthorization(String account, long target) {
         long total = target;
         List<JsonNode> listOfData = new ArrayList<>();
