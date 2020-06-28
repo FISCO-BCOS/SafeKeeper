@@ -20,6 +20,8 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.fisco.bcos.safekeeper.account.AccountService;
 import org.fisco.bcos.safekeeper.base.entity.BasePageResponse;
 import org.fisco.bcos.safekeeper.base.enums.DataStatus;
@@ -28,6 +30,7 @@ import org.fisco.bcos.safekeeper.base.tools.JacksonUtils;
 import org.fisco.bcos.safekeeper.data.entity.DataQueryParam;
 import org.fisco.bcos.safekeeper.data.entity.DataRequestInfo;
 import org.fisco.bcos.safekeeper.data.entity.TbDataInfo;
+import org.fisco.bcos.safekeeper.data.entity.TokenInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -177,7 +180,8 @@ public class DataController extends BaseController {
         List<TbDataInfo> dataInfoList = dataService.queryData(queryParams);
         for (int i = 0; i < dataInfoList.size(); i++) {
             dataInfoList.get(i).setDataStatus(DataStatus.UNAVAILABLE.getValue());
-            dataService.updateDataRow(dataInfoList.get(i));
+            Integer count = dataService.updateDataRow(dataInfoList.get(i));
+            dataService.checkDbAffectRow(count);
         }
 
         log.info("end deleteRawData. useTime:{} result:{}", Duration.between(startTime, Instant.now()).toMillis(),
@@ -266,7 +270,7 @@ public class DataController extends BaseController {
     /**
      * get token list.
      */
-    @GetMapping(value = "/wedpr/vcl/v1/credentials/approve")
+    @PatchMapping(value = "/wedpr/vcl/v1/credentials/approve")
     @PreAuthorize(ConstantProperties.HAS_ROLE_VISITOR)
     public BaseResponse getCredentialList(@RequestParam(value="value") long value) throws SafeKeeperException {
         BaseResponse baseResponse = new BaseResponse(ConstantCode.SUCCESS);
@@ -281,7 +285,7 @@ public class DataController extends BaseController {
         }
 
         // get token List
-        List<JsonNode> listOfData = dataService.getCredentialList(currentAccount, value);
+        List<JsonNode> listOfData = dataService.preAuthorization(currentAccount, value);
         baseResponse.setData(listOfData);
 
         log.info("end wedpr/vcl/getCredentialList. useTime:{} result:{}",

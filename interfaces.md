@@ -924,7 +924,7 @@
 
 * 网络传输协议：使用HTTPS协议
 * 请求地址: `/data/wedpr/vcl/v1/credentials/approve`
-* 请求方式：GET
+* 请求方式：PATCH
 * 返回格式：JSON
 
 #### 3.6.2 参数信息详情
