@@ -226,11 +226,11 @@ public class DataController extends BaseController {
     /**
      * query raw data list.
      */
-    @GetMapping(value = "/wedpr/vcl/v1/credentials/status")
+    @GetMapping(value = "/wedpr/vcl/v1/credentials")
     @PreAuthorize(ConstantProperties.HAS_ROLE_VISITOR)
     public BasePageResponse listCredentialsByStatus(@RequestParam(value="pageNumber") Integer pageNumber,
                                                     @RequestParam(value="pageSize") Integer pageSize,
-                                                    @RequestParam(value="status") String status)
+                                                    @RequestParam(value="credentialStatus") String status)
             throws SafeKeeperException {
         BasePageResponse pagesponse = new BasePageResponse(ConstantCode.SUCCESS);
         Instant startTime = Instant.now();

@@ -1145,17 +1145,17 @@
 #### 3.10.1 传输协议规范
 
 * 网络传输协议：使用HTTPS协议
-* 请求地址: `/data/wedpr/vcl/v1/credentials/status`
+* 请求地址: `/data/wedpr/vcl/v1/credentials`
 * 请求方式：GET
 * 返回格式：JSON
 
 #### 3.10.2 参数信息详情
 
-| 序号 | 请求body   | 类型   | 可为空 | 备注                       |
-| ---- | ---------- | ------ | ------ | -------------------------- |
-| 1    | pageNumber | Int    | 否     | 每页记录数                 |
-| 2    | pageSize   | Int    | 否     | 当前页码                   |
-| 3    | status     | String | 否     | 数据状态                   |
+| 序号 | 请求body         | 类型   | 可为空 | 备注                       |
+| ---- | ---------------- | ------ | ------ | -------------------------- |
+| 1    | pageNumber       | Int    | 否     | 每页记录数                 |
+| 2    | pageSize         | Int    | 否     | 当前页码                   |
+| 3    | credentialStatus | String | 否     | 数据状态                   |
 
 | 序号 | 返回body   | 类型   | 可为空 | 备注                       |
 | ---- | ---------- | ------ | ------ | -------------------------- |
@@ -1167,7 +1167,7 @@
 
 #### 3.10.3 入参示例
 
-`https://127.0.0.1:9501/SafeKeeper/data/wedpr/vcl/v1/credentials/status?pageNumber=1&pageSize=10&status=1`
+`https://127.0.0.1:9501/SafeKeeper/data/wedpr/vcl/v1/credentials?pageNumber=1&pageSize=10&credentialStatus=1`
 
 #### 3.10.4 出参示例
 
