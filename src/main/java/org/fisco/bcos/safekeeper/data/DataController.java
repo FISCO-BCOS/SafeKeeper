@@ -178,6 +178,9 @@ public class DataController extends BaseController {
 
         DataQueryParam queryParams = new DataQueryParam(currentAccount, dataId);
         List<TbDataInfo> dataInfoList = dataService.queryData(queryParams);
+        if (dataInfoList.size() == 0) {
+            throw new SafeKeeperException(ConstantCode.DATA_NOT_EXISTS);
+        }
         for (int i = 0; i < dataInfoList.size(); i++) {
             dataInfoList.get(i).setDataStatus(DataStatus.UNAVAILABLE.getValue());
             Integer count = dataService.updateDataRow(dataInfoList.get(i));
