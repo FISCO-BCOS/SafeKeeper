@@ -313,7 +313,7 @@ public class DataController extends BaseController {
         Instant startTime = Instant.now();
         // current
         String currentAccount = getCurrentAccount(request);
-        log.info("start wedpr/vcl/getCredentialList. startTime: {} account: {} value: {}",
+        log.info("start wedpr/vcl/v1/credentials/approve. startTime: {} account: {} value: {}",
                 startTime.toEpochMilli(), currentAccount, value);
 
         if (value <= 0) {
@@ -324,7 +324,7 @@ public class DataController extends BaseController {
         List<JsonNode> listOfData = dataService.preAuthorization(currentAccount, value);
         baseResponse.setData(listOfData);
 
-        log.info("end wedpr/vcl/getCredentialList. useTime:{} result:{}",
+        log.info("end wedpr/vcl/v1/credentials/approve. useTime:{} result:{}",
                 Duration.between(startTime, Instant.now()).toMillis(), JacksonUtils.objToString(baseResponse));
         return baseResponse;
     }
